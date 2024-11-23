@@ -45,7 +45,6 @@ The application is backed by a MySQL database with the following entities:
 - **Thymeleaf** - For rendering dynamic web pages
 - **Spring Data Specifications** - For implementing product search filters
 - **HTML, CSS, JavaScript** - For frontend development and user interface
-- **Spring Boot Starter Web** - For creating REST APIs and serving the web pages
 
 ## Features
 - **User Role Management**: `ADMIN`, `CUSTOMER`, and `DEVELOPER` roles with varying levels of access.
@@ -73,7 +72,5 @@ The application is backed by a MySQL database with the following entities:
 - **Account Balance Refill**: A feature to refill account balances is missing.
 - **Password Reset**: There is no password reset functionality yet.
 - **Account Creation**: The ability for customers to create new accounts is not yet implemented.
-
-### Future Improvements:
 - **Delete Product Handling**: The delete functionality for products should be modified. Deleting a product used in an order causes an SQL constraint violation. A boolean flag (e.g., `active`) will be added to products to mark them as deactivated instead of deleting them outright.
 - **REST APIs**: The current controllers should be refactored into REST APIs to allow the frontend to consume data more efficiently, making the application more scalable.
