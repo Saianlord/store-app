@@ -6,29 +6,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
 public class UserService {
 
-    @Autowired
-    UserRepository repo;
+    private final UserRepository repo;
 
-//    @Autowired
-//    public UserService(UserRepository repo) {
-//        this.repo = repo;
-//    }
+    @Autowired
+    public UserService(UserRepository repo) {
+        this.repo = repo;
+    }
 
     public List<UserEntity> listAll(){
         return repo.findAll();
     }
 
-    public Optional<UserEntity> getById(Long userId){
+    public UserEntity getById(Long userId){
 
-        return repo.findById(userId);
+        return repo.findById(userId)
+                .orElseThrow(() -> new NoSuchElementException("User not found with id: " + userId));
     }
     public Optional<UserEntity> findUser(String username){
-        return repo.findUser(username);
+        return repo.findByUsername(username);
     }
 
     public void save(UserEntity user){

@@ -16,9 +16,9 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity customer;
+    private UserEntity user;
     @Column(name = "order_date")
     @CreationTimestamp
     private LocalDate orderDate;

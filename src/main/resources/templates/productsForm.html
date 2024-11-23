@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}"></head>
+<body>
+
+<header th:replace="~{layout :: header}"></header>
+
+<section class="content">
+
+    <div class="container my-5">
+        <h2>Add or Edit Product</h2>
+        <form method="post" action="/products/save-product" class="needs-validation" novalidate>
+
+            <div class="mb-3">
+                <label for="productId" class="form-label">Product ID</label>
+                <input type="text" class="form-control" id="productId" name="id" th:value="${product != null ? product.id : ''}" placeholder="Leave empty for new product">
+            </div>
+
+            <div class="mb-3">
+                <label for="productName" class="form-label">Product Name</label>
+                <input type="text" class="form-control" id="productName" name="name"  th:value="${product != null ? product.name : ''}" required>
+                <div class="invalid-feedback">
+                    Please provide a product name.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="productCategory" class="form-label">Category</label>
+                <select class="form-select" id="productCategory" name="category" required>
+                    <option value="" disabled selected>Select a category</option>
+                    <th:block th:each="c : ${categories}">
+                        <option th:value="${c.id}" th:text="${c.name}" th:selected="${product != null && product.category.id == c.id}"></option>
+                    </th:block>
+                </select>
+                <div class="invalid-feedback">
+                    Please select a category.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="productPrice" class="form-label" >Price</label>
+                <input type="number" class="form-control" id="productPrice" name="price" step="0.01" required th:value="${product != null ? product.price : ''}">
+                <div class="invalid-feedback">
+                    Please provide a price.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="productStock" class="form-label">Stock</label>
+                <input type="number" class="form-control" id="productStock" name="stock"  th:value="${product != null ? product.stock : ''}" required>
+                <div class="invalid-feedback">
+                    Please provide the stock quantity.
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-outline-primary">Save</button>
+                <a href="/products" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</section>
+
+
+
+
+<footer th:replace="~{layout :: footer}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+</body>
+</html>

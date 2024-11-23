@@ -1,6 +1,5 @@
 package com.store.store_app.config;
 
-import com.store.store_app.controllers.LoginController;
 import com.store.store_app.services.UserDetailServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,22 +7,14 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -32,14 +23,15 @@ public class SecurityConfig{
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf(AbstractHttpConfigurer::disable).csrf(AbstractHttpConfigurer::disable).httpBasic(Customizer.withDefaults()).
-                sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)).
-                formLogin(f -> {f.
-                        defaultSuccessUrl("/products").
-                        failureForwardUrl("/login?error=true").
-                        permitAll();
-                })
-                .logout(Customizer.withDefaults()).build();
+        return http.
+                authorizeHttpRequests(authz -> authz
+                        .requestMatchers(HttpMethod.GET,"/", "/login","index", "/register").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/products/**").authenticated()
+                        .requestMatchers("/static/**", "/images/**", "/css/**", "/js/**").permitAll()
+                        .anyRequest().authenticated()).
+                formLogin(f -> f.loginProcessingUrl("/login").defaultSuccessUrl("/products", true))
+                .csrf(AbstractHttpConfigurer::disable).
+                build();
     }
 
 

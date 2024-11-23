@@ -3,7 +3,6 @@ package com.store.store_app.models;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import java.util.UUID;
 
 import java.time.LocalDate;
 

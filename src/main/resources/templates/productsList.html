@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}"></head>
+<body>
+
+<header th:replace="~{layout :: header}"></header>
+
+<section class="content-products">
+    <div id="add-btn" sec:authorize="hasRole('ADMIN') or hasRole('DEVELOPER')" class="mb-3">
+        <a href="/products/form" class="btn btn-outline-success btn-lg">Add New Product</a>
+    </div>
+    <table class="table table-hover table-striped">
+        <form action="/products" method="get">
+            <tr>
+                <th>
+                    <input type="text" name="name" placeholder="Filter by Product Name" class="form-control form-control-sm" />
+                </th>
+                <th>
+                    <select class="form-select form-select-sm" name="category">
+                        <option value="">Select Category</option>
+                        <th:block th:each="c : ${categories}">
+                            <option th:value="${c.name}" th:text="${c.name}"></option>
+                        </th:block>
+                    </select>
+                </th>
+                <th>
+                    <input type="number" name="maxPrice" placeholder="Filter by Max Price" step="0.01" class="form-control form-control-sm" />
+                </th>
+                <th sec:authorize="hasRole('ADMIN') or hasRole('DEVELOPER')"></th>
+                <th sec:authorize="hasRole('ADMIN') or hasRole('DEVELOPER')"></th>
+
+                <th>
+                    <button type="submit" class="btn btn-sm btn-primary" style="width: 120px; padding-top: 10px; padding-bottom: 10px;">Filter</button>
+                </th>
+                <th></th>
+            </tr>
+        </form>
+        <tr>
+            <th>Product name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Add</th>
+            <th sec:authorize="hasRole('ADMIN') or hasRole('DEVELOPER')">EDIT</th>
+            <th sec:authorize="hasRole('ADMIN') or hasRole('DEVELOPER')">DELETE</th>
+        </tr>
+        <th:block th:each="p : ${products}">
+            <tr>
+                <td th:text="${p.name}"></td>
+                <td th:text="${p.category.name}"></td>
+                <td th:text="|$${p.price}|"></td>
+                <td th:text="|(${p.stock})|"></td>
+                <td>
+                    <form action="/cart/add" method="post">
+                        <input type="hidden" name="id" th:value="${p.id}">
+                        <button type="submit" class="btn btn-outline-primary" style="width: 140px;" sec:authorize="hasRole('CUSTOMER') or hasRole('DEVELOPER')">Add to the cart</button>
+                    </form>
+                </td>
+                <td sec:authorize="hasRole('ADMIN') or hasRole('DEVELOPER')">
+                    <a class="btn btn-outline-primary" style="width: 120px;" th:href="@{/products/form(id=${p.id})}">Edit</a>
+                </td>
+                <td sec:authorize="hasRole('ADMIN') or hasRole('DEVELOPER')">
+                    <a class="btn btn-outline-danger" style="width: 120px;"
+                       th:href="@{/products/delete(id=${p.id})}"
+                       onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
+                </td>
+            </tr>
+        </th:block>
+    </table>
+    <div class="pagination-container">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                    <a class="page-link" th:href="@{/products(page=${currentPage - 1}, size=${pageSize}, name=${name}, category=${category}, maxPrice=${maxPrice})}"
+                       aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                <li class="page-item" th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}"
+                    th:classappend="${pageNum == currentPage} ? 'active'">
+                    <a class="page-link" th:href="@{/products(page=${pageNum}, size=${pageSize}, name=${name}, category=${category}, maxPrice=${maxPrice})}"
+                       th:text="${pageNum + 1}">1</a>
+                </li>
+
+                <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                    <a class="page-link" th:href="@{/products(page=${currentPage + 1}, size=${pageSize}, name=${name}, category=${category}, maxPrice=${maxPrice})}"
+                       aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</section>
+
+<footer th:replace="~{layout :: footer}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

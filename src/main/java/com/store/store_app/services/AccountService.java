@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -18,9 +19,15 @@ public class AccountService {
         this.repo = repo;
     }
 
-    public Optional<Account> getById(Long accountId){
+    public List<Account> findAllAccountByUserId(Long userId){
+        return repo.findAllAccountByUserId(userId);
+    }
 
-        return repo.findById(accountId);
+
+    public Account getById(Long accountId){
+
+        return repo.findById(accountId)
+                .orElseThrow(() -> new NoSuchElementException("Account not found with id: " + accountId));
     }
 
     public void save(Account account){

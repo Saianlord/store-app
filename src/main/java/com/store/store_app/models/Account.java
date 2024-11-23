@@ -16,9 +16,13 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
+    private String name;
     @OneToOne
     @JoinColumn(name = "user_id")
-    private UserEntity customer;
+    private UserEntity user;
+
+    private float balance;
     @Column(name= "last_updated")
     @CreationTimestamp
     private LocalDate lastUpdated;

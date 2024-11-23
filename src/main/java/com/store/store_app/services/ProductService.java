@@ -3,9 +3,14 @@ package com.store.store_app.services;
 import com.store.store_app.repositories.ProductRepository;
 import com.store.store_app.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -22,9 +27,14 @@ public class ProductService {
         return repo.findAll();
     }
 
-    public Optional<Product> getById(Long productId){
+    public Page<Product> listByPage(Pageable pageable){
+        return repo.findAll(pageable);
+    }
 
-        return repo.findById(productId);
+    public Product getById(Long productId){
+
+        return repo.findById(productId)
+                .orElseThrow(() -> new NoSuchElementException("Product not found with id: " + productId));
     }
 
     public void save(Product product){
@@ -34,5 +44,10 @@ public class ProductService {
     public void delete(Long productId){
         repo.deleteById(productId);
     }
+
+    public Page<Product> listBySpecification(Specification<Product> spec, Pageable pageable) {
+        return repo.findAll(spec, pageable);
+    }
+
 
 }
