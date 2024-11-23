@@ -9,7 +9,7 @@
 		<relativePath/>
 	</parent>
 	<groupId>com.store</groupId>
-	<artifactId>store-app</artifactId>
+	<artifactId>md</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>store-app</name>
 	<description>Demo project for Spring Boot</description>

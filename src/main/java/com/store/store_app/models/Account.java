@@ -18,7 +18,7 @@ public class Account {
     private Long id;
     @Column(nullable = false)
     private String name;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
