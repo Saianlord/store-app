@@ -56,7 +56,6 @@ The application is backed by a MySQL database with the following entities:
 - **Search Filters**: Implemented search filters for products using Spring Data Specifications.
 - **Pagination**: Pagination of product list for efficient browsing.
 - **Cart Management**: Customers can add products to their cart, and it is stored in the session until the order is processed.
-- **User Management**: Developers and admins can now create, edit, deactivate, and reactivate users.
 
 ## Screenshots
 ![Screenshot of SQL diagram](screenshots/SQL%20Diagram.png)

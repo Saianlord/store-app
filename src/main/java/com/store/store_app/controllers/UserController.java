@@ -1,8 +1,7 @@
 package com.store.store_app.controllers;
 
-import com.store.store_app.models.Category;
+
 import com.store.store_app.models.CustomUserDetails;
-import com.store.store_app.models.Product;
 import com.store.store_app.models.UserEntity;
 import com.store.store_app.services.FirebaseStorageService;
 import com.store.store_app.services.RoleService;
