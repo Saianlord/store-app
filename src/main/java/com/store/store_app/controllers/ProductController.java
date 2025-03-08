@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -67,6 +68,7 @@ public class ProductController {
     }
 
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DEVELOPER')")
     @GetMapping("/form")
     public String editProduct(@RequestParam(value = "id", required = false) Long id, Model model){
         List<Category> categories = cService.listAll();
@@ -89,6 +91,7 @@ public class ProductController {
 
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DEVELOPER')")
     @PostMapping("/save-product")
     public String saveProduct(@ModelAttribute Product product){
 
@@ -98,6 +101,7 @@ public class ProductController {
 
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DEVELOPER')")
     @GetMapping("/delete")
     public String deleteProduct(@RequestParam(value = "id", required = true) Long id){
 

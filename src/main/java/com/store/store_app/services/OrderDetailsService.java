@@ -1,6 +1,6 @@
 package com.store.store_app.services;
 
-import com.store.store_app.Exceptions.OrderException;
+import com.store.store_app.exceptions.OrderException;
 import com.store.store_app.models.OrderDetails;
 import com.store.store_app.models.Product;
 import com.store.store_app.repositories.OrderDetailsRepository;

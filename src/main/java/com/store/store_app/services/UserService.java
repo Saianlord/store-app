@@ -23,10 +23,9 @@ public class UserService {
         return repo.findAll();
     }
 
-    public UserEntity getById(Long userId){
+    public Optional<UserEntity> getById(Long userId){
 
-        return repo.findById(userId)
-                .orElseThrow(() -> new NoSuchElementException("User not found with id: " + userId));
+        return repo.findById(userId);
     }
     public Optional<UserEntity> findUser(String username){
         return repo.findByUsername(username);
@@ -34,6 +33,10 @@ public class UserService {
 
     public void save(UserEntity user){
         repo.save(user);
+    }
+
+    public UserEntity saveReturn(UserEntity user){
+        return repo.save(user);
     }
 
     public void saveAll(List<UserEntity> users){

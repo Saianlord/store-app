@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller
 @RequestMapping("/account")
@@ -38,7 +39,7 @@ public class AccountController {
 
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        UserEntity user = uService.getById(customUserDetails.getId());
+        UserEntity user = uService.getById(customUserDetails.getId()).orElseThrow(()-> new NoSuchElementException("User not found with ID: " + customUserDetails.getId()));
 
         List<Account> userAccounts = aService.findAllAccountByUserId(user.getId());
 

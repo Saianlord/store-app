@@ -46,6 +46,7 @@ The application is backed by a MySQL database with the following entities:
 - **Spring Data Specifications** - For implementing product search filters
 - **HTML, CSS, JavaScript** - For frontend development and user interface
 - **Spring Boot Starter Web** - For creating REST APIs and serving the web pages
+- **Firebase** - Used for storing profile images, with only the URL being stored in the SQL database
 
 ## Features
 - **User Role Management**: `ADMIN`, `CUSTOMER`, and `DEVELOPER` roles with varying levels of access.
@@ -55,6 +56,7 @@ The application is backed by a MySQL database with the following entities:
 - **Search Filters**: Implemented search filters for products using Spring Data Specifications.
 - **Pagination**: Pagination of product list for efficient browsing.
 - **Cart Management**: Customers can add products to their cart, and it is stored in the session until the order is processed.
+- **User Management**: Developers and admins can now create, edit, deactivate, and reactivate users.
 
 ## Screenshots
 ![Screenshot of SQL diagram](screenshots/SQL%20Diagram.png)
@@ -64,15 +66,18 @@ The application is backed by a MySQL database with the following entities:
 ![Screenshot of Products view with Admin role](screenshots/Products-View-Admin.png)
 ![Screenshot of Products form to edit or save](screenshots/Edit-Save-View.png)
 ![Screenshot of Order processing view and Cart](screenshots/Order-Processing-View.png)
+![Screenshot Manage Users](screenshots/Users.png)
+![Screenshot Users Form](screenshots/Users-New.png)
 ![Screenshot of Account view](screenshots/Account-View.png)
+![Screenshot of Profile Image Update](screenshots/Account-Update-Image.png)
 ![Screenshot of Order history view](screenshots/Orders-View.png)
 ![Screenshot of Order Details view](screenshots/Order-Details-View.png)
 
 ## Room for Improvement
-- **Profile Picture Customization**: The ability to customize profile pictures and store them in the database is not yet implemented. Currently, a placeholder image is used across all accounts.
 - **Account Balance Refill**: A feature to refill account balances is missing.
 - **Password Reset**: There is no password reset functionality yet.
 - **Account Creation**: The ability for customers to create new accounts is not yet implemented.
+- **User Profile Editing**: Users still cannot update their own profiles.
 
 ### Future Improvements:
 - **Delete Product Handling**: The delete functionality for products should be modified. Deleting a product used in an order causes an SQL constraint violation. A boolean flag (e.g., `active`) will be added to products to mark them as deactivated instead of deleting them outright.

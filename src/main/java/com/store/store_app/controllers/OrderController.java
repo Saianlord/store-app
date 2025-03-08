@@ -1,6 +1,6 @@
 package com.store.store_app.controllers;
 
-import com.store.store_app.Exceptions.OrderException;
+import com.store.store_app.exceptions.OrderException;
 import com.store.store_app.models.*;
 import com.store.store_app.services.AccountService;
 import com.store.store_app.services.OrderDetailsService;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller
 @RequestMapping("/order")
@@ -80,7 +81,8 @@ public class OrderController {
 
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        UserEntity user = uService.getById(customUserDetails.getId());
+        UserEntity user = uService.getById(customUserDetails.getId()).orElseThrow(()-> new NoSuchElementException("User not found with ID: " + customUserDetails.getId()));
+
 
 
         try {

@@ -6,8 +6,8 @@
 <header th:replace="~{layout :: header}"></header>
 
 <section class="content-products">
-    <div id="add-btn" sec:authorize="hasRole('ADMIN') or hasRole('DEVELOPER')" class="mb-3">
-        <a href="/products/form" class="btn btn-outline-success btn-lg">Add New Product</a>
+    <div id="add-product-btn" sec:authorize="hasRole('ADMIN') or hasRole('DEVELOPER')" class="d-flex justify-content-start w-75 mt-4 mb-3" style="margin-left: 20px;">
+        <a href="/products/form" class="btn btn-success px-4 py-2">Add New Product</a>
     </div>
     <table class="table table-hover table-striped">
         <form action="/products" method="get">

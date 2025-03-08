@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}"></head>
+<body>
+
+<header th:replace="~{layout :: header}"></header>
+
+<section class="content-products">
+    <div class="container d-flex flex-column align-items-center">
+
+        <!-- Adjusted margin top to separate the button from the navbar -->
+        <div class="d-flex justify-content-end w-75 mt-4 mb-3">
+            <a class="btn btn-success px-4 py-2" href="/users/form">New User</a>
+        </div>
+
+        <h3>Active Users</h3>
+        <table class="table table-hover table-striped text-center w-75">
+            <tr>
+                <th>Username</th>
+                <th>Actions</th>
+            </tr>
+            <th:block th:each="u : ${users}">
+                <tr th:if="${u.isEnabled}">
+                    <td th:text="${u.username}"></td>
+                    <td>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a class="btn btn-outline-primary" style="width: 120px;" th:href="@{/users/form(id=${u.id})}">Edit</a>
+                            <a class="btn btn-outline-warning" style="width: 120px;" th:href="@{/users/deactivate(id=${u.id})}"
+                               onclick="return confirm('Are you sure you want to deactivate this user?');">Deactivate</a>
+                        </div>
+                    </td>
+                </tr>
+            </th:block>
+        </table>
+
+        <!-- Inactive Users -->
+        <h3>Inactive Users</h3>
+        <table class="table table-hover table-striped text-center w-75">
+            <tr>
+                <th>Username</th>
+                <th>Actions</th>
+            </tr>
+            <th:block th:each="u : ${users}">
+                <tr th:if="${!u.isEnabled}">
+                    <td th:text="${u.username}"></td>
+                    <td>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a class="btn btn-outline-success" style="width: 120px;" th:href="@{/users/reactivate(id=${u.id})}"
+                               onclick="return confirm('Are you sure you want to reactivate this user?');">Reactivate</a>
+                        </div>
+                    </td>
+                </tr>
+            </th:block>
+        </table>
+    </div>
+</section>
+
+<footer th:replace="~{layout :: footer}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

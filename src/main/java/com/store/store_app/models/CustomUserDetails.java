@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class CustomUserDetails implements UserDetails {
 
-    private final UserEntity user;
+    private final transient UserEntity user;
 
     public CustomUserDetails(UserEntity user) {
         this.user = user;
@@ -49,21 +49,6 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public String getUsername() {
         return user.getUsername();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return user.isAccountNoExpired();
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return user.isAccountNoLocked();
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return user.isCredentialsNoExpired();
     }
 
     @Override
